@@ -1,6 +1,5 @@
 package mn.gov.xyp;
 
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -17,22 +16,32 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 
-
 @ClientEndpoint
 public class DigitalSignatureApprove {
 
+
+    public static void main(String[] args) throws Exception {
+        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        Session session = container.connectToServer(DigitalSignatureApprove.class, URI.create(Constants.ESIGN_URL));
+        Thread.sleep(20000); // Wait for a few seconds before closing the connection
+        session.close();
+        System.out.println("end");
+    }
+
+
     private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
     private String timeStamp = "";
-    static String regnum="ЕЮ00222501";
-    static String esignUrl="ws://127.0.0.1:59001";
+
     public static String GetCurrentTimestamp(){
         Date date = new Date();
         DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return Long.toString(date.getTime() / 1000);
     }
+
     public DigitalSignatureApprove(){
         this.timeStamp = GetCurrentTimestamp();
     }
+
     public static String toHex(byte[] data) {
         char[] chars = new char[data.length * 2];
         for (int i = 0; i < data.length; i++) {
@@ -54,7 +63,7 @@ public class DigitalSignatureApprove {
     public void onOpen(Session session) {
         System.out.println("WebSocket connection opened: " + session.getId());
         // Send a message to the server
-        String data = regnum + "." + timeStamp;
+        String data = Constants.REGNUM + "." + timeStamp;
         String message = "{'type':'e457cb50ed64bde0','data':'" + data +"'}";
         System.out.println(message);
         session.getAsyncRemote().sendText(message);
@@ -71,7 +80,7 @@ public class DigitalSignatureApprove {
         System.out.println("cerial number: " + serialNumber);
 
         XypClientCode df = new XypClientCode();
-        df.callUseSignature(serialNumber, signature ,timeStamp, regnum);
+        df.callUseSignature(serialNumber, signature ,timeStamp, Constants.REGNUM);
         // Close the JsonReader
         reader.close();
         try {
@@ -90,15 +99,4 @@ public class DigitalSignatureApprove {
     public void onError(Throwable throwable) {
         System.out.println("WebSocket error occurred: " + throwable.getMessage());
     }
-
-    public static void main(String[] args) throws Exception {
-        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        System.out.println(esignUrl);
-        Session session = container.connectToServer(DigitalSignatureApprove.class, URI.create(esignUrl));
-        Thread.sleep(20000); // Wait for a few seconds before closing the connection
-        session.close();
-        System.out.println("end");
-    }
-
-
 }

@@ -16,8 +16,6 @@ import java.util.Hashtable;
 
 @RestController
 public class XypSign {
-
-    public String keyPath = "src/unenbat.key";
     private Hashtable<String, String> toBeSigned(String accessToken, String timestamp){
         Hashtable<String, String> toBeSigned = new Hashtable<String, String>();
         toBeSigned.put("accessToken", accessToken);
@@ -26,7 +24,7 @@ public class XypSign {
     }
     public Hashtable<String, String> Generate(String accessToken, String timestamp){
         try {
-            byte[] privateKeyBytes = Files.readAllBytes(Paths.get(keyPath));
+            byte[] privateKeyBytes = Files.readAllBytes(Paths.get(Constants.KEY_PATH));
             String privateKeyString = new String(privateKeyBytes);
             privateKeyString = privateKeyString
                     .replaceAll("\\n", "")

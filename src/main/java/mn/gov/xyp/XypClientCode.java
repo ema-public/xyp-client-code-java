@@ -1,7 +1,6 @@
 package mn.gov.xyp;
 
 import mn.gov.xyp.citizen.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.ws.BindingProvider;
@@ -11,9 +10,6 @@ import java.util.*;
 @RestController
 public class XypClientCode {
     static String wsdl = "https://xyp.gov.mn/citizen-1.5.0/ws?WSDL";
-    static String accessToken = "9f03863d2f8ae93b24a47c6d3e0314d1";
-
-
     public void callUseSignature(String serialNumber, String signature, String timestamp, String regnum) {
 
         CitizenService citizenService = new CitizenServiceService().getCitizenServicePort();
@@ -22,7 +18,7 @@ public class XypClientCode {
         req_ctx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, wsdl);
         Map<String, List<String>> headers = new HashMap<String, List<String>>();
         XypSign xypSign = new XypSign();
-        Hashtable<String, String> fields = xypSign.Generate(accessToken, timestamp);
+        Hashtable<String, String> fields = xypSign.Generate(Constants.ACCESS_TOKEN, timestamp);
 
         try{
             headers.put("accessToken", Collections.singletonList(fields.get("accessToken")));
