@@ -78,4 +78,4 @@ $ wsimport -d mn.gov.xyp.citzen https://xyp.gov.mn/citizen-1.5.0/ws?WSDL
 Иргэнийг тоон гарын үсгээр баталгаажуулан дуудахдаа [DigitalSignatureApprove.java](./src/main/java/mn/gov/xyp/DigitalSignatureApprove.java)
 кодын **main()** функцыг ажилуулна.
 
-Иргэнийг OTP кодоор баталгаажуулан дуудахдаа [OTPApprove.java](./src/main/java/mn/gov/xyp/OTPApprove.java)кодын **main()** функцыг ажилуулна.
+Иргэнийг OTP кодоор баталгаажуулан дуудахдаа [OTPApprove.java](./src/main/java/mn/gov/xyp/OTPApprove.java) кодын **main()** функцыг ажилуулна.
