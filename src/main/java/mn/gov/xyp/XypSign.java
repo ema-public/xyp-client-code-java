@@ -1,6 +1,7 @@
 package mn.gov.xyp;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.*;
@@ -17,20 +18,18 @@ public class XypSign {
         return toBeSigned;
     }
     public Hashtable<String, String> Generate(String accessToken, String timestamp){
+        System.out.println("here Generate::"+accessToken+"::"+timestamp);
         try {
             byte[] privateKeyBytes = Files.readAllBytes(Paths.get(Constants.KEY_PATH));
             String privateKeyString = new String(privateKeyBytes);
             privateKeyString = privateKeyString
-                    .replaceAll("\\n", "")
+                    .replace(System.getProperty("line.separator"), "")
                     .replace("-----BEGIN PRIVATE KEY-----", "")
                     .replace("-----END PRIVATE KEY-----", "");
             byte[] decodedKey = Base64.getDecoder().decode(privateKeyString);
-
             PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decodedKey);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PrivateKey privateKey = keyFactory.generatePrivate(spec);
-
-            // Create a signature object
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(privateKey);
 
@@ -44,15 +43,7 @@ public class XypSign {
             toBeSigned.put("signature", encodedSignature);
 
             return toBeSigned;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (SignatureException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

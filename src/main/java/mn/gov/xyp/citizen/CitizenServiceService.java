@@ -1,10 +1,14 @@
 
 package mn.gov.xyp.citizen;
 
-import javax.xml.namespace.QName;
-import javax.xml.ws.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import javax.xml.ws.WebEndpoint;
+import javax.xml.ws.WebServiceClient;
+import javax.xml.ws.WebServiceException;
+import javax.xml.ws.WebServiceFeature;
 
 
 /**
@@ -13,7 +17,7 @@ import java.net.URL;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CitizenServiceService", targetNamespace = "http://citizen.xyp.gov.mn/", wsdlLocation = "https://xyp.gov.mn/citizen-1.5.0/ws?WSDL")
+@WebServiceClient(name = "CitizenServiceService", targetNamespace = "http://citizen.xyp.gov.mn/", wsdlLocation = "file:/C:/Users/dodo/Downloads/xyp-client-code-java/src/WSDL/citizen.xml")
 public class CitizenServiceService
     extends Service
 {
@@ -26,7 +30,7 @@ public class CitizenServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://xyp.gov.mn/citizen-1.5.0/ws?WSDL");
+            url = new URL("file:/C:/Users/dodo/Downloads/xyp-client-code-java/src/WSDL/citizen.xml");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
