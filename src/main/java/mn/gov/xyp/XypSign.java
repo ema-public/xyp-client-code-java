@@ -1,24 +1,28 @@
 package mn.gov.xyp;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.Hashtable;
 
+/**
+ * ХУР системийг ашиглаж буй байгууллага өөрийн тоон гарын үсгийг зурах модуль
+ *
+ * @author unenbat
+ * @since 2023-05-19
+ */
 public class XypSign {
-    private Hashtable<String, String> toBeSigned(String accessToken, String timestamp){
-        Hashtable<String, String> toBeSigned = new Hashtable<String, String>();
+
+    private Hashtable<String, String> toBeSigned(String accessToken, String timestamp) {
+        Hashtable<String, String> toBeSigned = new Hashtable<>();
         toBeSigned.put("accessToken", accessToken);
         toBeSigned.put("timestamp", timestamp);
         return toBeSigned;
     }
-    public Hashtable<String, String> Generate(String accessToken, String timestamp){
-        System.out.println("here Generate::"+accessToken+"::"+timestamp);
+
+    public Hashtable<String, String> Generate(String accessToken, String timestamp) {
         try {
             byte[] privateKeyBytes = Files.readAllBytes(Paths.get(Constants.KEY_PATH));
             String privateKeyString = new String(privateKeyBytes);
@@ -33,12 +37,10 @@ public class XypSign {
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(privateKey);
 
-            // Generate the signature
             Hashtable<String, String> toBeSigned = toBeSigned(accessToken, timestamp);
             signature.update((toBeSigned.get("accessToken") + "." + toBeSigned.get("timestamp")).getBytes());
-            byte[] signatureBytes = signature.sign();
 
-            // Print the signature in Base64 encoding
+            byte[] signatureBytes = signature.sign();
             String encodedSignature = Base64.getEncoder().encodeToString(signatureBytes);
             toBeSigned.put("signature", encodedSignature);
 
