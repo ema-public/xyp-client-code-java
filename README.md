@@ -14,7 +14,7 @@ public static final String ACCESS_TOKEN = "qwertyuoisdfjlkm12dfgklskd4";
 public static final String KEY_PATH = "src/key.key";
 //Иргэний регистрийн дугаар
 public static final String REGNUM = "АА00112233";
-#Тоон гарын үсэг зурах client программын  local дээр ажиллаж буй хаяг. 
+//Тоон гарын үсэг зурах client программын  local дээр ажиллаж буй хаяг. 
 //ESIGN CLIENT программын хувьд тогтмол "127.0.0.1:97001" байна.
 public static final String ESIGN_URL = "ws://127.0.0.1:59001";
 ```
