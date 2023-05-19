@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "CitizenServiceService", targetNamespace = "http://citizen.xyp.gov.mn/", wsdlLocation = "file:/D:/projects/folder-xyp/xyp-test-projects/xyp-client-code-java/src/WSDL/citizen.xml")
+@WebServiceClient(name = "CitizenServiceService", targetNamespace = "http://citizen.xyp.gov.mn/", wsdlLocation = "file:/E:/xyp-client-code-java/src/WSDL/citizen.xml")
 public class CitizenServiceService
     extends Service
 {
@@ -30,7 +30,7 @@ public class CitizenServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/D:/projects/folder-xyp/xyp-test-projects/xyp-client-code-java/src/WSDL/citizen.xml");
+            url = new URL("file:/E:/xyp-client-code-java/src/WSDL/citizen.xml");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
